@@ -14,6 +14,8 @@ public class HotelResponse {
     private String country;
     private Double rating;
     private String imageUrl;
+    private String amenities;
+    private String hotelType;
     private Double startingPrice;
     private Integer totalRooms;
     private LocalDateTime createdAt;
@@ -123,5 +125,21 @@ public class HotelResponse {
 
     public void setRooms(List<RoomResponse> rooms) {
         this.rooms = rooms;
+    }
+
+    public String getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(String amenities) {
+        this.amenities = amenities;
+    }
+
+    public String getHotelType() {
+        return hotelType;
+    }
+
+    public void setHotelType(String hotelType) {
+        this.hotelType = hotelType;
     }
 }

@@ -25,7 +25,7 @@ const AdminDashboard = () => {
   const [hotelModalOpen, setHotelModalOpen] = useState(false);
   const [editingHotel, setEditingHotel] = useState(null);
   const [hotelForm, setHotelForm] = useState({
-    name: '', description: '', address: '', city: '', state: '', country: 'India', rating: 4.5, imageUrl: ''
+    name: '', description: '', address: '', city: '', state: '', country: 'India', rating: 4.5, imageUrl: '', amenities: '', hotelType: 'LUXURY'
   });
 
   const [roomModalOpen, setRoomModalOpen] = useState(false);
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
   const openAddHotelModal = () => {
     setEditingHotel(null);
     setHotelForm({
-      name: '', description: '', address: '', city: '', state: '', country: 'India', rating: 4.5, imageUrl: ''
+      name: '', description: '', address: '', city: '', state: '', country: 'India', rating: 4.5, imageUrl: '', amenities: '', hotelType: 'LUXURY'
     });
     setHotelModalOpen(true);
   };
@@ -105,7 +105,9 @@ const AdminDashboard = () => {
       state: h.state || '',
       country: h.country || 'India',
       rating: h.rating || 4.5,
-      imageUrl: h.imageUrl || ''
+      imageUrl: h.imageUrl || '',
+      amenities: h.amenities || '',
+      hotelType: h.hotelType || 'LUXURY'
     });
     setHotelModalOpen(true);
   };
@@ -358,6 +360,7 @@ const AdminDashboard = () => {
                 <thead>
                   <tr>
                     <th>Hotel</th>
+                    <th>Type</th>
                     <th>City / State</th>
                     <th>Rating</th>
                     <th>Rooms</th>
@@ -371,8 +374,12 @@ const AdminDashboard = () => {
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                           <img
-                            src={h.imageUrl || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=100&q=80'}
+                            src={h.imageUrl || '/assets/hotels/placeholder.jpg'}
                             alt={h.name}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = '/assets/hotels/placeholder.jpg';
+                            }}
                             style={{ width: '45px', height: '40px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }}
                           />
                           <div>
@@ -380,6 +387,9 @@ const AdminDashboard = () => {
                             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{h.address}</div>
                           </div>
                         </div>
+                      </td>
+                      <td>
+                        <span className="badge badge-primary">{h.hotelType || 'LUXURY'}</span>
                       </td>
                       <td>{h.city}, {h.state}</td>
                       <td>⭐ {h.rating}</td>
@@ -654,14 +664,40 @@ const AdminDashboard = () => {
                       />
                     </div>
                   </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="form-group">
+                      <label>Property Type</label>
+                      <select
+                        className="form-select"
+                        value={hotelForm.hotelType}
+                        onChange={(e) => setHotelForm({ ...hotelForm, hotelType: e.target.value })}
+                      >
+                        <option value="LUXURY">Luxury</option>
+                        <option value="RESORT">Resort</option>
+                        <option value="HERITAGE">Heritage</option>
+                        <option value="BOUTIQUE">Boutique</option>
+                        <option value="BUSINESS">Business</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label>Image URL / Path</label>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="/assets/hotels/... or https://..."
+                        value={hotelForm.imageUrl}
+                        onChange={(e) => setHotelForm({ ...hotelForm, imageUrl: e.target.value })}
+                      />
+                    </div>
+                  </div>
                   <div className="form-group">
-                    <label>Image URL</label>
+                    <label>Amenities (Comma-separated)</label>
                     <input
-                      type="url"
+                      type="text"
                       className="form-input"
-                      placeholder="https://..."
-                      value={hotelForm.imageUrl}
-                      onChange={(e) => setHotelForm({ ...hotelForm, imageUrl: e.target.value })}
+                      placeholder="e.g. Free Wi-Fi, Swimming Pool, Luxury Spa, Fine Dining"
+                      value={hotelForm.amenities}
+                      onChange={(e) => setHotelForm({ ...hotelForm, amenities: e.target.value })}
                     />
                   </div>
                 </div>

@@ -35,11 +35,18 @@ const Home = () => {
   };
 
   const destinations = [
-    { city: 'Pune', state: 'Maharashtra', count: 'Cultural & Tech Hub', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80' },
-    { city: 'Mumbai', state: 'Maharashtra', count: 'Arabian Sea Vistas', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80' },
-    { city: 'Goa', state: 'Goa', count: 'Beaches & Sunset Shacks', img: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=600&q=80' },
-    { city: 'Nashik', state: 'Maharashtra', count: 'Vineyards & Hill Retreats', img: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80' },
-    { city: 'Bangalore', state: 'Karnataka', count: 'Garden City Luxury', img: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=600&q=80' },
+    { city: 'Pune', state: 'Maharashtra', count: 'Cultural & Tech Hub', img: '/assets/hotels/pune-hotel-1.jpg' },
+    { city: 'Mumbai', state: 'Maharashtra', count: 'Arabian Sea Vistas', img: '/assets/hotels/mumbai-hotel-1.jpg' },
+    { city: 'Goa', state: 'Goa', count: 'Beaches & Sunset Shacks', img: '/assets/hotels/goa-hotel-1.jpg' },
+    { city: 'Jaipur', state: 'Rajasthan', count: 'Royal Heritage Palaces', img: '/assets/hotels/jaipur-hotel-1.jpg' },
+    { city: 'Udaipur', state: 'Rajasthan', count: 'City of Lakes & Luxury', img: '/assets/hotels/udaipur-hotel-1.jpg' },
+    { city: 'Manali', state: 'Himachal Pradesh', count: 'Himalayan Snow Peaks', img: '/assets/hotels/manali-hotel-1.jpg' },
+    { city: 'Lonavala', state: 'Maharashtra', count: 'Mist Valleys & Waterfalls', img: '/assets/hotels/lonavala-hotel-1.jpg' },
+    { city: 'Nashik', state: 'Maharashtra', count: 'Vineyards & Hill Retreats', img: '/assets/hotels/nashik-hotel-1.jpg' },
+    { city: 'Bangalore', state: 'Karnataka', count: 'Garden City Luxury', img: '/assets/hotels/bangalore-hotel-1.jpg' },
+    { city: 'Hyderabad', state: 'Telangana', count: 'Cyber Skyline & Royal Dine', img: '/assets/hotels/hyderabad-hotel-1.jpg' },
+    { city: 'Kerala', state: 'Kerala', count: 'Backwater Lagoons & Spa', img: '/assets/hotels/kerala-hotel-1.jpg' },
+    { city: 'Agra', state: 'Uttar Pradesh', count: 'Taj Views & Mughal Grandeur', img: '/assets/hotels/agra-hotel-1.jpg' },
   ];
 
   return (
@@ -248,6 +255,10 @@ const Home = () => {
                 <img
                   src={dest.img}
                   alt={dest.city}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/assets/hotels/placeholder.jpg';
+                  }}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
                 <div style={{

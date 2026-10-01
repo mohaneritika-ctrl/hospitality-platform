@@ -38,7 +38,7 @@ public class HotelService {
     }
 
     @Transactional(readOnly = true)
-    public List<HotelResponse> searchHotels(String city, String name, String state, Double minRating, Double minPrice, Double maxPrice, String sortBy) {
+    public List<HotelResponse> searchHotels(String city, String name, String state, String hotelType, Double minRating, Double minPrice, Double maxPrice, String sortBy) {
         List<Hotel> hotels = hotelRepository.findAll();
 
         return hotels.stream()
@@ -55,6 +55,11 @@ public class HotelService {
                     }
                     if (state != null && !state.isBlank()) {
                         if (h.getState() == null || !h.getState().toLowerCase().contains(state.trim().toLowerCase())) {
+                            return false;
+                        }
+                    }
+                    if (hotelType != null && !hotelType.isBlank()) {
+                        if (h.getHotelType() == null || !h.getHotelType().equalsIgnoreCase(hotelType.trim())) {
                             return false;
                         }
                     }
@@ -99,7 +104,9 @@ public class HotelService {
                 request.getState(),
                 request.getCountry() != null ? request.getCountry() : "India",
                 request.getRating(),
-                request.getImageUrl()
+                request.getImageUrl(),
+                request.getAmenities(),
+                request.getHotelType()
         );
         Hotel saved = hotelRepository.save(hotel);
         return mapToResponse(saved, false);
@@ -120,6 +127,8 @@ public class HotelService {
         if (request.getImageUrl() != null && !request.getImageUrl().isBlank()) {
             hotel.setImageUrl(request.getImageUrl());
         }
+        hotel.setAmenities(request.getAmenities());
+        hotel.setHotelType(request.getHotelType());
 
         Hotel updated = hotelRepository.save(hotel);
         return mapToResponse(updated, true);
@@ -143,6 +152,8 @@ public class HotelService {
         response.setCountry(hotel.getCountry());
         response.setRating(hotel.getRating());
         response.setImageUrl(hotel.getImageUrl());
+        response.setAmenities(hotel.getAmenities());
+        response.setHotelType(hotel.getHotelType());
         response.setCreatedAt(hotel.getCreatedAt());
 
         if (hotel.getRooms() != null && !hotel.getRooms().isEmpty()) {

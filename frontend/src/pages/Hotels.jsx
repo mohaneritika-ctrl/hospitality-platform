@@ -13,6 +13,7 @@ const Hotels = () => {
   // Filter States
   const [city, setCity] = useState(searchParams.get('city') || '');
   const [name, setName] = useState(searchParams.get('name') || '');
+  const [hotelType, setHotelType] = useState(searchParams.get('hotelType') || '');
   const [minRating, setMinRating] = useState(searchParams.get('minRating') || '');
   const [minPrice, setMinPrice] = useState(searchParams.get('minPrice') || '');
   const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') || '');
@@ -24,6 +25,7 @@ const Hotels = () => {
       const params = {};
       if (city) params.city = city;
       if (name) params.name = name;
+      if (hotelType) params.hotelType = hotelType;
       if (minRating) params.minRating = parseFloat(minRating);
       if (minPrice) params.minPrice = parseFloat(minPrice);
       if (maxPrice) params.maxPrice = parseFloat(maxPrice);
@@ -40,7 +42,7 @@ const Hotels = () => {
 
   useEffect(() => {
     fetchHotels();
-  }, [city, minRating, minPrice, maxPrice, sortBy]);
+  }, [city, hotelType, minRating, minPrice, maxPrice, sortBy]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -50,6 +52,7 @@ const Hotels = () => {
   const handleResetFilters = () => {
     setCity('');
     setName('');
+    setHotelType('');
     setMinRating('');
     setMinPrice('');
     setMaxPrice('');
@@ -57,7 +60,12 @@ const Hotels = () => {
     setSearchParams({});
   };
 
-  const cities = ['All', 'Pune', 'Mumbai', 'Goa', 'Nashik', 'Bangalore'];
+  const cities = [
+    'All', 'Pune', 'Mumbai', 'Goa', 'Jaipur', 'Udaipur',
+    'Manali', 'Lonavala', 'Nashik', 'Bangalore', 'Hyderabad', 'Kerala', 'Agra'
+  ];
+
+  const hotelTypes = ['All', 'LUXURY', 'RESORT', 'HERITAGE', 'BOUTIQUE', 'BUSINESS'];
 
   return (
     <div style={{ padding: '2.5rem 0 4rem 0', backgroundColor: 'var(--bg-main)' }}>
@@ -77,7 +85,7 @@ const Hotels = () => {
           <form onSubmit={handleSearchSubmit}>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
               gap: '1rem',
               alignItems: 'flex-end',
             }}>
@@ -109,6 +117,22 @@ const Hotels = () => {
                 </select>
               </div>
 
+              {/* Property Type Select */}
+              <div className="form-group" style={{ marginBottom: 0 }}>
+                <label>Property Type</label>
+                <select
+                  className="form-select"
+                  value={hotelType}
+                  onChange={(e) => setHotelType(e.target.value === 'All' ? '' : e.target.value)}
+                >
+                  {hotelTypes.map((t) => (
+                    <option key={t} value={t === 'All' ? '' : t}>
+                      {t === 'All' ? 'All Types' : t.charAt(0) + t.slice(1).toLowerCase()}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* Minimum Rating */}
               <div className="form-group" style={{ marginBottom: 0 }}>
                 <label>Minimum Rating</label>
@@ -118,8 +142,8 @@ const Hotels = () => {
                   onChange={(e) => setMinRating(e.target.value)}
                 >
                   <option value="">Any Rating</option>
-                  <option value="4.0">4.0+ Stars</option>
                   <option value="4.5">4.5+ Stars</option>
+                  <option value="4.7">4.7+ Stars</option>
                   <option value="4.8">4.8+ Stars</option>
                 </select>
               </div>
@@ -169,6 +193,7 @@ const Hotels = () => {
           <div>
             Showing <strong style={{ color: 'var(--primary)' }}>{hotels.length}</strong> {hotels.length === 1 ? 'hotel' : 'hotels'}
             {city && <span> in <strong style={{ color: 'var(--accent)' }}>{city}</strong></span>}
+            {hotelType && <span> &bull; <strong style={{ color: 'var(--primary)' }}>{hotelType.charAt(0) + hotelType.slice(1).toLowerCase()}</strong></span>}
           </div>
         </div>
 

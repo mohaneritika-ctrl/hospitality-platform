@@ -12,16 +12,17 @@ The platform provides a complete end-to-end hotel reservation experience. Guests
 - **User Registration and Login**: Secure account creation with email format validation and duplicate check.
 - **JWT-Based Authentication**: Stateless authentication utilizing JSON Web Tokens (HMAC-SHA256) and BCrypt password encryption.
 - **User Authorization**: Strict Role-Based Access Control (`ROLE_USER` vs. `ROLE_ADMIN`).
-- **Hotel Listing**: Browse curated properties with search, filtering by city, rating, price range, and sorting.
-- **Hotel Details**: Detailed view including descriptions, addresses, star ratings, amenities, and available rooms.
-- **Room Management**: Room categorization (Standard, Deluxe, Suite) with price per night, guest capacity, and status.
-- **Room Availability**: Real-time room status tracking with admin availability toggles.
-- **Hotel Booking**: Date selection, real-time night and price calculation, guest counter, and instant reservation confirmation.
+- **Hotel Directory (16 Demo Properties)**: Realistic demo properties across top Indian destinations (Pune, Mumbai, Goa, Jaipur, Udaipur, Manali, Lonavala, Nashik, Bangalore, Hyderabad, Kerala, Agra).
+- **Property Categories**: Curated hotel categories including Luxury, Resort, Heritage, Boutique, and Business.
+- **Hotel Details & Amenities**: Detailed property descriptions, full amenities lists, star ratings, and location info.
+- **Local HD Hotel Photography**: Professional hotel images stored locally with graceful fallback placeholder handling.
+- **Advanced Search & Filtering**: Multi-criteria hotel search filtering by city, property type, minimum rating, and sorting options.
+- **Room Management (48 Demo Rooms)**: Multiple room tiers per property (Standard, Deluxe, Suite) with nightly pricing, capacities, and descriptions.
+- **Room Availability & Booking**: Real-time room status tracking with instant booking confirmation.
 - **Double-Booking Prevention**: Mathematical date-overlap verification preventing concurrent conflicting bookings on the same room.
 - **My Bookings**: Customer portal to view upcoming/past stays and cancel bookings without cancellation fees.
 - **Admin Dashboard**: Visual analytics for total users, hotels, rooms, bookings, confirmed/cancelled counts, and revenue.
-- **Hotel Management**: Full CRUD operations (create, view, update, delete hotels).
-- **Room Management**: Full CRUD operations for hotel rooms with instant updates.
+- **Hotel & Room Admin Management**: Full CRUD operations for hotels (with property type and amenities) and rooms.
 - **Booking Management**: View all reservations across the system with status filters.
 - **AI-Powered Chatbot**: Hospitality assistant answering queries on hotel recommendations, policies, pricing, and check-in/out timings, backed by PostgreSQL history persistence and fallback support.
 - **REST APIs**: Modular RESTful endpoints following standard HTTP methods and status codes.

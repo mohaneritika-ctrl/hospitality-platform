@@ -33,6 +33,11 @@ public class Hotel {
     @Column(length = 1000)
     private String imageUrl;
 
+    @Column(length = 1000)
+    private String amenities;
+
+    private String hotelType;
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -51,6 +56,12 @@ public class Hotel {
         this.country = country;
         this.rating = rating;
         this.imageUrl = imageUrl;
+    }
+
+    public Hotel(String name, String description, String address, String city, String state, String country, Double rating, String imageUrl, String amenities, String hotelType) {
+        this(name, description, address, city, state, country, rating, imageUrl);
+        this.amenities = amenities;
+        this.hotelType = hotelType;
     }
 
     @PrePersist
@@ -128,6 +139,22 @@ public class Hotel {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(String amenities) {
+        this.amenities = amenities;
+    }
+
+    public String getHotelType() {
+        return hotelType;
+    }
+
+    public void setHotelType(String hotelType) {
+        this.hotelType = hotelType;
     }
 
     public LocalDateTime getCreatedAt() {

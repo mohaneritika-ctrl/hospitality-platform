@@ -27,6 +27,10 @@ public class HotelRequest {
 
     private String imageUrl;
 
+    private String amenities;
+
+    private String hotelType;
+
     public HotelRequest() {}
 
     public HotelRequest(String name, String description, String address, String city, String state, String country, Double rating, String imageUrl) {
@@ -38,6 +42,12 @@ public class HotelRequest {
         this.country = country;
         this.rating = rating;
         this.imageUrl = imageUrl;
+    }
+
+    public HotelRequest(String name, String description, String address, String city, String state, String country, Double rating, String imageUrl, String amenities, String hotelType) {
+        this(name, description, address, city, state, country, rating, imageUrl);
+        this.amenities = amenities;
+        this.hotelType = hotelType;
     }
 
     public String getName() {
@@ -102,5 +112,21 @@ public class HotelRequest {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(String amenities) {
+        this.amenities = amenities;
+    }
+
+    public String getHotelType() {
+        return hotelType;
+    }
+
+    public void setHotelType(String hotelType) {
+        this.hotelType = hotelType;
     }
 }

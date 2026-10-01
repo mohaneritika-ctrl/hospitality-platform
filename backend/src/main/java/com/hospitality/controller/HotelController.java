@@ -36,11 +36,12 @@ public class HotelController {
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String state,
+            @RequestParam(required = false) String hotelType,
             @RequestParam(required = false) Double minRating,
             @RequestParam(required = false) Double minPrice,
             @RequestParam(required = false) Double maxPrice,
             @RequestParam(required = false, defaultValue = "rating_desc") String sortBy) {
-        return ResponseEntity.ok(hotelService.searchHotels(city, name, state, minRating, minPrice, maxPrice, sortBy));
+        return ResponseEntity.ok(hotelService.searchHotels(city, name, state, hotelType, minRating, minPrice, maxPrice, sortBy));
     }
 
     @PostMapping
