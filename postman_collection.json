@@ -1,0 +1,299 @@
+{
+  "info": {
+    "name": "Hospitality Platform - Hotel Booking System API",
+    "description": "Complete Postman collection for testing the Spring Boot full-stack hotel booking platform.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rohan Mehta\",\n  \"email\": \"rohan@gmail.com\",\n  \"password\": \"User@123\",\n  \"phone\": \"+91 9822334455\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "Login (User)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) { pm.collectionVariables.set('jwt_token', jsonData.token); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"rahul@gmail.com\",\n  \"password\": \"User@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Login (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) { pm.collectionVariables.set('jwt_token', jsonData.token); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@hospitality.com\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Hotels",
+      "item": [
+        {
+          "name": "Get All Hotels",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/hotels", "host": ["{{baseUrl}}"], "path": ["hotels"] }
+          }
+        },
+        {
+          "name": "Search Hotels (City=Pune)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/hotels/search?city=Pune",
+              "host": ["{{baseUrl}}"],
+              "path": ["hotels", "search"],
+              "query": [{ "key": "city", "value": "Pune" }]
+            }
+          }
+        },
+        {
+          "name": "Get Hotel By ID (with Rooms)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/hotels/1", "host": ["{{baseUrl}}"], "path": ["hotels", "1"] }
+          }
+        },
+        {
+          "name": "Create Hotel (Admin Only)",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"The Royal Orchid Palace\",\n  \"description\": \"Heritage luxury retreat near historic landmarks.\",\n  \"address\": \"Koregaon Park\",\n  \"city\": \"Pune\",\n  \"state\": \"Maharashtra\",\n  \"country\": \"India\",\n  \"rating\": 4.8,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1566073771259-6a8506099945\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/hotels", "host": ["{{baseUrl}}"], "path": ["hotels"] }
+          }
+        },
+        {
+          "name": "Update Hotel (Admin Only)",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"The Royal Orchid Grand\",\n  \"description\": \"Upgraded 5-star heritage property.\",\n  \"address\": \"Koregaon Park North\",\n  \"city\": \"Pune\",\n  \"state\": \"Maharashtra\",\n  \"country\": \"India\",\n  \"rating\": 4.9,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1566073771259-6a8506099945\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/hotels/1", "host": ["{{baseUrl}}"], "path": ["hotels", "1"] }
+          }
+        },
+        {
+          "name": "Delete Hotel (Admin Only)",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/hotels/6", "host": ["{{baseUrl}}"], "path": ["hotels", "6"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Rooms",
+      "item": [
+        {
+          "name": "Get Rooms for Hotel",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/hotels/1/rooms", "host": ["{{baseUrl}}"], "path": ["hotels", "1", "rooms"] }
+          }
+        },
+        {
+          "name": "Create Room in Hotel (Admin Only)",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hotelId\": 1,\n  \"roomNumber\": \"401\",\n  \"roomType\": \"SUITE\",\n  \"pricePerNight\": 8500.0,\n  \"capacity\": 4,\n  \"available\": true,\n  \"description\": \"Presidential skyline suite.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/hotels/1/rooms", "host": ["{{baseUrl}}"], "path": ["hotels", "1", "rooms"] }
+          }
+        },
+        {
+          "name": "Toggle Room Availability (Admin Only)",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "PATCH",
+            "url": { "raw": "{{baseUrl}}/rooms/1/toggle", "host": ["{{baseUrl}}"], "path": ["rooms", "1", "toggle"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Bookings",
+      "item": [
+        {
+          "name": "Create Booking",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roomId\": 1,\n  \"checkInDate\": \"2026-10-15\",\n  \"checkOutDate\": \"2026-10-18\",\n  \"numberOfGuests\": 2\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/bookings", "host": ["{{baseUrl}}"], "path": ["bookings"] }
+          }
+        },
+        {
+          "name": "Get My Bookings",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/bookings/my", "host": ["{{baseUrl}}"], "path": ["bookings", "my"] }
+          }
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "PUT",
+            "url": { "raw": "{{baseUrl}}/bookings/1/cancel", "host": ["{{baseUrl}}"], "path": ["bookings", "1", "cancel"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. User Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/users/profile", "host": ["{{baseUrl}}"], "path": ["users", "profile"] }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rahul S. Sharma\",\n  \"phone\": \"+91 9822099887\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/users/profile", "host": ["{{baseUrl}}"], "path": ["users", "profile"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. AI Chatbot",
+      "item": [
+        {
+          "name": "Send Message",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Which hotels are available in Pune?\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/chatbot/message", "host": ["{{baseUrl}}"], "path": ["chatbot", "message"] }
+          }
+        },
+        {
+          "name": "Get Chat History",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/chatbot/history", "host": ["{{baseUrl}}"], "path": ["chatbot", "history"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Admin Center",
+      "item": [
+        {
+          "name": "Get Statistics",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/admin/statistics", "host": ["{{baseUrl}}"], "path": ["admin", "statistics"] }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/admin/users", "host": ["{{baseUrl}}"], "path": ["admin", "users"] }
+          }
+        },
+        {
+          "name": "Get All Bookings",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt_token}}", "type": "string" }] },
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/admin/bookings", "host": ["{{baseUrl}}"], "path": ["admin", "bookings"] }
+          }
+        }
+      ]
+    }
+  ]
+}
