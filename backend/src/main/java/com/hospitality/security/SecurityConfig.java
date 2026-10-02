@@ -62,6 +62,7 @@ public class SecurityConfig {
                         // Public APIs
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hotels/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/chatbot/message").permitAll()
                         .requestMatchers("/error").permitAll()
 
                         // Admin APIs
@@ -76,7 +77,7 @@ public class SecurityConfig {
                         // Authenticated APIs (USER and ADMIN)
                         .requestMatchers("/api/bookings/**").authenticated()
                         .requestMatchers("/api/users/**").authenticated()
-                        .requestMatchers("/api/chatbot/**").authenticated()
+                        .requestMatchers("/api/chatbot/history").authenticated()
 
                         // Any other request
                         .anyRequest().authenticated()

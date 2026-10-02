@@ -31,7 +31,7 @@ public class AdminController {
         this.bookingService = bookingService;
     }
 
-    @GetMapping("/statistics")
+    @GetMapping({"", "/", "/stats", "/statistics"})
     public ResponseEntity<AdminStatsResponse> getStatistics() {
         return ResponseEntity.ok(adminService.getStatistics());
     }

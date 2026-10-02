@@ -6,6 +6,11 @@ export const adminApi = {
     return response.data;
   },
 
+  getStats: async () => {
+    const response = await axiosClient.get('/admin/statistics');
+    return response.data;
+  },
+
   getAllUsers: async () => {
     const response = await axiosClient.get('/admin/users');
     return response.data;

@@ -33,7 +33,42 @@ const Register = () => {
     setError('');
     setFieldErrors({});
 
-    const result = await register(formData);
+    const errors = {};
+    if (!formData.name || !formData.name.trim()) {
+      errors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2 || formData.name.trim().length > 50) {
+      errors.name = 'Name must be between 2 and 50 characters';
+    }
+
+    if (!formData.email || !formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      errors.email = 'Invalid email format';
+    }
+
+    if (!formData.password) {
+      errors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters';
+    }
+
+    if (!formData.phone || !formData.phone.trim()) {
+      errors.phone = 'Phone number is required';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+
+    const payload = {
+      name: formData.name.trim(),
+      email: formData.email.trim().toLowerCase(),
+      password: formData.password,
+      phone: formData.phone.trim(),
+    };
+
+    const result = await register(payload);
     if (result.success) {
       navigate('/', { replace: true });
     } else {
