@@ -1,6 +1,16 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+// Determine API base URL dynamically from environment variable or fallback to localhost
+const getBaseUrl = () => {
+  let url = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+  url = url.trim().replace(/\/+$/, ''); // Remove trailing slashes
+  if (!url.endsWith('/api')) {
+    url = `${url}/api`;
+  }
+  return url;
+};
+
+const API_BASE_URL = getBaseUrl();
 
 const axiosClient = axios.create({
   baseURL: API_BASE_URL,

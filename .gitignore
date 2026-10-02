@@ -11,11 +11,6 @@ target/
 *.ear
 *.nar
 
-# Maven wrapper and local repository files
-.mvn/
-mvnw
-mvnw.cmd
-
 # Node.js & Frontend dependencies & build artifacts
 node_modules/
 **/node_modules/

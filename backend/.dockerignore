@@ -1,0 +1,10 @@
+target/
+.mvn/
+mvnw*
+*.log
+application-local.properties
+application-dev.properties
+.env
+.git
+.idea
+.vscode
